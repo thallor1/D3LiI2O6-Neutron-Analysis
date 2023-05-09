@@ -1,0 +1,43 @@
+data_DLiIro
+_chemical_name_mineral D3LiIr2O6
+_cell_length_a 5.337(12)
+_cell_length_b 9.25(2)
+_cell_length_c 4.918(11)
+_cell_angle_alpha 90
+_cell_angle_beta 111.691(12)
+_cell_angle_gamma 90
+_cell_volume 225.5(9)
+_symmetry_space_group_name_H-M C2/m
+_chemical_formula_sum	"H3 Li Ir2 O6"
+_cell_formula_units_Z	2
+
+loop_
+	_symmetry_equiv_pos_as_xyz
+	 'x, y, z '
+	 '-x, y, -z '
+	 'x, -y, z '
+	 '-x, -y, -z '
+	 'x+1/2, y+1/2, z '
+	 '-x+1/2, y+1/2, -z '
+	 'x+1/2, -y+1/2, z '
+	 '-x+1/2, -y+1/2, -z '
+
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_symmetry_multiplicity
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_occupancy
+_atom_site_B_iso_or_equiv
+D1 D   2 0 0 0.5 1 0.00(4)
+D2 D   4 0 0.33(7) 0.5 1 0.00(4)
+Ir1 Ir   4 0 0.1641(8) 0 0.75 0.00(4)
+Li1 Li   4 0 0.1641(8) 0 0.25 0.00(4)
+Ir2 Ir   2 0 0.5 0 0.5 0.00(4)
+Li2 Li   2 0 0.5 0 0.5 0.00(4)
+O1 O   8 0.865(6) 0.357(2) 0.107(2) 1 0.00(4)
+O2 O   4 0.927(10) 0 0.256(4) 1 0.00(4)
+
+#--eof--eof--eof--#
