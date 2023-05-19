@@ -295,19 +295,25 @@ def MDfactorization(workspace_MDHisto,mag_ion='Ir4',q_lim=False,e_lim=False,Ei=5
     #xq_padded = np.pad(x_q, (Nx//2, Nx-1-Nx//2), mode='edge')
     #x_smooth = np.convolve(xq_padded, np.ones((Nx,))/Nx, mode='valid') 
     #ge_padded = np.pad(g_e, (Ny//2, Ny-1-Ny//2), mode='edge')
-    #g_smooth = np.convolve(ge_padded, np.ones((Ny,))/Ny, mode='valid') 
-    model_xq_smooth = get_natural_cubic_spline_model(q,x_q,minval=np.nanmin(q),maxval=np.nanmax(q),n_knots=round(Nx)+1)
-    x_smooth = model_xq_smooth.predict(q)
-    model_ge_smooth = get_natural_cubic_spline_model(e,g_e,minval=np.nanmin(e),maxval=np.nanmax(e),n_knots=round(Ny)+1)
-    g_smooth=model_ge_smooth.predict(e)
-    x_diff = np.abs(x_q - x_smooth)
-    g_diff = np.abs(g_e - g_smooth)
-    x_q_stdDev = np.mean(x_diff)
-    g_e_stdDev = np.mean(g_diff)
-    if Ny<2:
+    #g_smooth = np.convolve(ge_padded, np.ones((Ny,))/Ny, mode='valid')
+    try:
+        model_xq_smooth = get_natural_cubic_spline_model(q,x_q,minval=np.nanmin(q),maxval=np.nanmax(q),n_knots=round(Nx)+1)
+        x_smooth = model_xq_smooth.predict(q)
+        model_ge_smooth = get_natural_cubic_spline_model(e,g_e,minval=np.nanmin(e),maxval=np.nanmax(e),n_knots=round(Ny)+1)
+        g_smooth=model_ge_smooth.predict(e)
+        x_diff = np.abs(x_q - x_smooth)
+        g_diff = np.abs(g_e - g_smooth)
+        x_q_stdDev = np.mean(x_diff)
+        g_e_stdDev = np.mean(g_diff)
+        if Ny<2:
+            g_e_stdDev = np.mean(g_e)/10.0
+        if Nx<2:
+            x_q_stdDev=np.mean(x_q)/10.0
+
+    except Exception as e:
         g_e_stdDev = np.mean(g_e)/10.0
-    if Nx<2:
         x_q_stdDev=np.mean(x_q)/10.0
+
 
     errs={}
     err_array=[]
@@ -338,7 +344,7 @@ def MDfactorization(workspace_MDHisto,mag_ion='Ir4',q_lim=False,e_lim=False,Ei=5
             stdDev = x_q_stdDev
         min_param_val = param.value-stdDev*3.0
         max_param_val = param.value+stdDev*3.0
-        step = (max_param_val - min_param_val)/30.0
+        step = (max_param_val - min_param_val)/100.0
         j=0
         l=0
         flag=0
@@ -391,6 +397,7 @@ def MDfactorization(workspace_MDHisto,mag_ion='Ir4',q_lim=False,e_lim=False,Ei=5
             if new_chisqr<oldchisqr and len(chisqr_arr)>=7:
                 #local minima shifted, no longer good.
                 fitnow=True
+
             #If the new chisqr is greater than the previous one all is well. 
             #Append the new chisqr and test value to the array. 
             if new_chisqr>oldchisqr or len(chisqr_arr)<7:
